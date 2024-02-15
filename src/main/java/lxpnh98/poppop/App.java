@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 
 /**
  * JavaFX App
@@ -26,7 +27,13 @@ public class App extends Application {
         imageView.setImage(image);
         imageView.setX(200);
         imageView.setY(200);
-        var root = new Group(imageView);
+
+        var bubble = new Circle(200, 100, 50);
+
+        var root = new Group();
+        root.getChildren().add(imageView);
+        root.getChildren().add(bubble);
+
         var scene = new Scene(root, 500, 400);
 
         stage.setScene(scene);
