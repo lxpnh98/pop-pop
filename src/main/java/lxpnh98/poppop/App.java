@@ -2,8 +2,10 @@ package lxpnh98.poppop;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.Group;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -28,6 +30,25 @@ public class App extends Application {
         var renderer = new Renderer(canvas);
         renderer.addPlayer(player);
 
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case LEFT:  player.goLeft(); break;
+                    case RIGHT: player.goRight(); break;
+                }
+            }
+        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case LEFT:  player.stopLeft(); break;
+                    case RIGHT: player.stopRight(); break;
+                }
+            }
+        });
+
         startGame(renderer, player);
     }
 
@@ -36,7 +57,7 @@ public class App extends Application {
             @Override
             public void handle(long now) {
                 renderer.render();
-                player.move(1, 0);
+                player.move();
             };
         };
         gameLoop.start();
