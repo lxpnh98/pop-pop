@@ -11,7 +11,9 @@ import javafx.stage.Stage;
 
 import org.dyn4j.dynamics.Body;
 import org.dyn4j.geometry.Circle;
+import org.dyn4j.geometry.Segment;
 import org.dyn4j.geometry.MassType;
+import org.dyn4j.geometry.Vector2;
 import org.dyn4j.world.World;
 
 /**
@@ -37,18 +39,26 @@ public class App extends Application {
         world.setGravity(0, 9.8);
 
         var bubble = new Body();
-        bubble.addFixture(new Circle(50)).setDensity(10);
+        var fixture = bubble.addFixture(new Circle(50));
+        fixture.setDensity(10);
+        fixture.setRestitution(1.0);
         bubble.translateToOrigin();
-        bubble.translate(200, 100);
+        bubble.translate(250, 100);
         bubble.setMass(MassType.valueOf("NORMAL"));
         world.addBody(bubble);
 
         var bubble2 = new Body();
-        bubble2.addFixture(new Circle(30)).setDensity(10);
+        var fixture2 = bubble2.addFixture(new Circle(30));
+        fixture2.setDensity(10);
+        fixture2.setRestitution(1.0);
         bubble2.translateToOrigin();
-        bubble2.translate(100, 230);
+        bubble2.translate(150, 230);
         bubble2.setMass(MassType.valueOf("NORMAL"));
         world.addBody(bubble2);
+
+        var floor = new Body();
+        floor.addFixture(new Segment(new Vector2(0, 300), new Vector2(300, 300)));
+        world.addBody(floor);
 
         var renderer = new Renderer(canvas);
         renderer.addPlayer(player);
